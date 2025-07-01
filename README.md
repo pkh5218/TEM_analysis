@@ -48,7 +48,7 @@ The core script `solve_TEM_KE_daily.m` solves the quasi-diagnostic Kuo–Eliasse
     - Daily `FTEM` streamfunction: the sum of all forcing responses
     - Saved to NetCDF using `save_nc_block`
 
-## 📤 Output Variables
+## Output Variables
 
 Each output variable has dimensions `[lat x lev x day]`, including:
 
@@ -57,7 +57,7 @@ Each output variable has dimensions `[lat x lev x day]`, including:
 - `FEP*`, `FG*`: EP flux and G-vector components
 - `tempsi`, `eumpsi`: Streamfunction from integrating v*
 
-## 📞 Contact
+## Contact
 
 Maintainer: [Pin-Chun Huang](mailto:pkh5218@psu.edu)  
 GitHub: [https://github.com/pkh5218/TEM_analysis](https://github.com/pkh5218/TEM_analysis)
