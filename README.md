@@ -10,7 +10,7 @@ The core script `solve_TEM_KE_daily.m` solves the quasi-diagnostic Kuo–Eliasse
 
 | File | Description |
 |------|-------------|
-| `main_TEM_driver.m` | Main script. Iterates over time and layers to call the solver. Saves outputs to NetCDF. |
+| `main_TEM_solver.m` | Main script. Iterates over time and layers to call the solver. Saves outputs to NetCDF. |
 | `solve_TEM_KE_daily.m` | Core function that calculates all forcing terms and solves the Kuo–Eliassen equation via LU decomposition. |
 | `save_nc_block.m` | Helper function to write output variables (with dimensions lat × lev × day) to NetCDF file. |
 | `compute_TEM_ERA5.m` | Calculates TEM streamfunction from zonal-mean `v` and `v′θ′`. Outputs both EUM and TEM forms. |
