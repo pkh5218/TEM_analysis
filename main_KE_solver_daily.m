@@ -1,6 +1,21 @@
 clear;
 clc;
 close all
+%% --------------------------------------------------------
+% Kuo-Eliassen TEM Daily Solver (Main Script)
+% Author: Pin-Chun
+% Latest Update: 2025-07-02
+%
+% Description:
+% This script computes daily diagnostics of the Transformed Eulerian Mean (TEM)
+% streamfunction and related forcing terms using ERA5 daily mean reanalysis data.
+% The solution is constructed sequentially from near-surface to stratosphere
+% using coarse-to-fine pressure resolutions:
+%   - First solve at coarse 25 hPa resolution (p1)
+%   - Then use result as BC for 12.5 hPa resolution (p2)
+%   - Finally solve with 1 hPa resolution for stratosphere (p3)
+%% --------------------------------------------------------
+
 %% Coefficients
 Omega       = 7.292E-5;
 p0          = 1000*100;
@@ -69,16 +84,6 @@ if m ~= 1
     v   = ncread([path,'VCOMP/v_daily_mean.',num2str(year(m)),'.nc'], 'v');
     w   = ncread([path,'OMEGA/w_daily_mean.',num2str(year(m)),'.nc'], 'w');
     T   = ncread([path,'TEMP/T_daily_mean.',num2str(year(m)),'.nc'], 't'); 
-    %{
-    u_back   = u;
-    v_back   = v;
-    w_back   = w;
-    T_back   = T; 
-    u   = u_forward;
-    v   = v_forward;
-    w   = w_forward;
-    T   = T_forward;
-    %}
 end
 if m ~= N_period
     u_forward   = ncread([path,'UCOMP/u_daily_mean.',num2str(year(m)+1),'.nc'], 'u');
@@ -408,13 +413,10 @@ end
 end
 
 load('TEMmap2.mat')
-plot_figure_zmlog(lat,lev,mean(FTEM_year,3)*365,mymap,8,[-80 80]);
-plot_figure_zmlog(lat,lev,mean(tempsi_year,3)*365,mymap,8,[-80 80]);
+% Plot Figures for testing
+plot_figure_zmlog(lat,lev,mean(FTEM_year,3),mymap,8,[-80 80]);
+plot_figure_zmlog(lat,lev,mean(tempsi_year,3),mymap,8,[-80 80]);
 
-A1 = mean(FTEM_year,3);
-A2 = mean(tempsi_year,3);
-Error = (A1-A2)./A2*100;
-plot_figure_zm(lat,lev(2:end),Error(:,2:end),mymap,100,[-80 80]);
 
 
 
