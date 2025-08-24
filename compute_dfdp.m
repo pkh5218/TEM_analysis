@@ -1,23 +1,10 @@
-function dfdp = compute_dfdp(f,p)
-    % Compute non-uniform dx differences
-    m = size(f,2);
-    dfdp = f;
-
-    % Forward difference for the first point
-    dfdp(:,1) = f(:,2) - f(:,1);
-
-    % Central difference for the interior points
-    for j = 2:m-1
-        dfdp(:,j) = (f(:,j+1) - f(:,j-1)) / 2;
-    end
-
-    % Backward difference for the last point
-    dfdp(:,m) = f(:,m) - f(:,m-1);
-    
-    dp = compute_df(p);
-
-    for j = 1:m
-        dfdp(:,j) = dfdp(:,j)/dp(j);
-    end
-
+function dfdp = compute_dfdp(f, p)
+% f: [Ny x Np], p: Pressure level (Pa)
+    dp = p(3) - p(2); 
+    dfdp = zeros(size(f));
+    % Interior (Central Difference)
+    dfdp(:,2:end-1) = (f(:,3:end) - f(:,1:end-2)) / (2*dp);
+    % Boundaries (Forward/Backward Difference)
+    dfdp(:,1) = (f(:,2) - f(:,1)) / dp;
+    dfdp(:,end) = (f(:,end) - f(:,end-1)) / dp;
 end
