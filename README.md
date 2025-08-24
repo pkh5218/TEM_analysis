@@ -1,4 +1,4 @@
-# TEM–KE Solver (ERA5)
+# TEM–KE Solver
 
 This repository contains a MATLAB implementation of the **Kuo–Eliassen (KE) Transformed Eulerian Mean (TEM) solver**, adapted for daily ERA5 reanalysis data.  
 The code computes the TEM and EUM streamfunctions, Eliassen–Palm (EP) fluxes and their divergence and other forcing terms of the KE equation.  
