@@ -274,7 +274,7 @@ for m = 1:Nyears
     [eumpsi, tempsi] = compute_TEM_ERA5(v_bar, EHF_dthdp, p, cos_map);
 
     % (10) Diabatic heating & friction (from 3-day fields)
-    [J, ~] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat, m, day, Nyears, Ndays);
+    [J, ~] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat);
     X = compute_X(u_3day, u_prime, v_prime, w_prime, u_bar, v_bar, w_bar, p, lat);
 
     dJdy = compute_dfdy(J,  phi);
@@ -494,3 +494,4 @@ for m = 1:Nyears
     
     toc
 end
+
