@@ -30,13 +30,17 @@ function [J, J_map] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat, m, 
     cosphi = cos(phi);
 
     % ---- dT/dt ----
-    if (m==1 && day==1)
-        dTdt = (T_3day(:,:,:,3) - T_3day(:,:,:,2)) / dt;
-    elseif (m==Nyears && day==NDays)
-        dTdt = (T_3day(:,:,:,2) - T_3day(:,:,:,1)) / dt;
+    prev_is_halo = all(T_prev(:)==0);
+    next_is_halo = all(T_next(:)==0);
+
+    if prev_is_halo && ~next_is_halo
+        dudt = (T_next - T_curr)/dt;          % forward at first day
+    elseif ~prev_is_halo && next_is_halo
+        dudt = (T_curr - T_prev)/dt;          % backward at last day
     else
-        dTdt = (T_3day(:,:,:,3) - T_3day(:,:,:,1)) / (2*dt);
+        dudt = (T_next - T_prev)/(2*dt);      % central for normal days
     end
+    dudt_bar = squeeze(mean(dudt,1));         % [Ny x Nlev]
 
     % ---- Space Differentiation ----
     dx = deg2rad(lon(2)-lon(1));
@@ -74,4 +78,5 @@ function [J, J_map] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat, m, 
 
     % zonal mean
     J = squeeze(mean(J_map,1));  % [Ny x Nlev]
+
 end
