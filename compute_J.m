@@ -1,4 +1,4 @@
-function [J, J_map] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat, m, day, Nyears, NDays)
+function [J, J_map] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat)
 % Zonal-mean Diabatic Heating J and the whole map 3-D data J_map
 %   F = (1/(a cos^2 φ)) ∂φ [ (ū v̄ + (u'v')) cos^2 φ ]
 %       + ∂p [ ū w̄ + (u'w')̄]  - f v̄ + ∂ū/∂t
@@ -80,3 +80,4 @@ function [J, J_map] = compute_J(u_3day, v_3day, w_3day, T_3day, p, lon, lat, m, 
     J = squeeze(mean(J_map,1));  % [Ny x Nlev]
 
 end
+
